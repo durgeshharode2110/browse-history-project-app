@@ -1,0 +1,56 @@
+
+.browser-history-element{
+    display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   margin-top:10px;
+}
+.browser-history{
+    display: flex;
+    flex-direction: row;
+}
+.time{
+  color: #475569;
+  font-weight: bold;
+  font-size:10px;
+  margin-right: 23px;
+}
+.title{
+  color:#475569;
+  font-weight: bold;
+  font-size:10px;
+      margin-right:10px ;
+}
+.logo-url{
+  color:#64748b;
+  font-size:10px;
+      margin-right:10px ;
+
+}
+.logo-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.logo-size{
+    height:15px;
+    width:15px;
+    margin-right:10px ;
+
+}
+.delete-icon-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.delete-btn{
+  background-color: #ffffff;
+  border:none;
+  cursor: pointer;
+  outline: none;
+}
+
+.delete-img{
+    height:15px;
+    width:15px;
+}
