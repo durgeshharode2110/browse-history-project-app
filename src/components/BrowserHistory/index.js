@@ -3,7 +3,7 @@ import './index.css'
 // Replace your code here
 const BrowserHistory = props => {
   const {eachHistory, deleteHistory} = props
-  const {id, timeAccessed, logoUrl, title} = eachHistory
+  const {id, timeAccessed, logoUrl, title, domainUrl} = eachHistory
   const onDelete = () => {
     deleteHistory(id)
   }
@@ -15,8 +15,8 @@ const BrowserHistory = props => {
           <img src={logoUrl} alt="domain logo" className="logo-size" />
         </div>
         <p className="title">{title}</p>
-        <p className="logo-url" key="domainUrl">
-          {logoUrl}
+        <p className="logo-url" key={domainUrl}>
+          {domainUrl}
         </p>
       </div>
       <div className="delete-icon-container">

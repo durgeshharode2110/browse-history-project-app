@@ -80,14 +80,22 @@ const initialHistoryList = [
 ]
 
 class App extends Component {
-  state = {userInput: '', historyList: initialHistoryList}
+  state = {
+    userInput: '',
+    historyList: initialHistoryList,
+    allHistoryDeleted: false,
+  }
 
   deleteHistory = id => {
     const {historyList} = this.state
     const filteredHistory = historyList.filter(
       eachHistory => eachHistory.id !== id,
     )
-    this.setState({historyList: filteredHistory})
+    if (filteredHistory.length === 0) {
+      this.setState({historyList: filteredHistory, allHistoryDeleted: true})
+    } else {
+      this.setState({historyList: filteredHistory})
+    }
   }
 
   showHistoryFromUser = event => {
@@ -98,34 +106,12 @@ class App extends Component {
   render() {
     const {userInput} = this.state
     const {historyList} = this.state
-    if (historyList.length === 0) {
-      return (
-        <div className="history-bg-container">
-          <div className="top-search-section">
-            <img
-              src="https://assets.ccbp.in/frontend/react-js/history-website-logo-img.png"
-              className="history-logo"
-              alt="app logo"
-            />
-            <div className="search-icon-container">
-              <img
-                src="https://assets.ccbp.in/frontend/react-js/search-img.png "
-                className="search-icon"
-                alt=" search"
-              />
-              <input
-                className="search-input"
-                placeholder="Search history"
-                type="search"
-                onChange={this.showHistoryFromUser}
-              />
-            </div>
-          </div>
-          <div className="no-content-show">
-            <p>There is no history to show</p>
-          </div>
-        </div>
-      )
+    let {allHistoryDeleted} = this.state
+    const newHistoryList = historyList.filter(eachHistory =>
+      eachHistory.title.toLowerCase().includes(userInput.toLowerCase()),
+    )
+    if (newHistoryList.length === 0) {
+      allHistoryDeleted = true
     }
     return (
       <div className="history-bg-container">
@@ -139,7 +125,7 @@ class App extends Component {
             <img
               src="https://assets.ccbp.in/frontend/react-js/search-img.png "
               className="search-icon"
-              alt=" search"
+              alt="search"
             />
             <input
               className="search-input"
@@ -150,19 +136,26 @@ class App extends Component {
           </div>
         </div>
         <div className="history-card-section">
-          <ul className="browser-history-card">
-            {historyList.map(eachHistory =>
-              eachHistory.title
-                .toLowerCase()
-                .includes(userInput.toLowerCase()) ? (
-                <BrowserHistory
-                  eachHistory={eachHistory}
-                  key={eachHistory.id}
-                  deleteHistory={this.deleteHistory}
-                />
-              ) : null,
-            )}
-          </ul>
+          {!allHistoryDeleted && (
+            <ul className="browser-history-card">
+              {historyList.map(eachHistory =>
+                eachHistory.title
+                  .toLowerCase()
+                  .includes(userInput.toLowerCase()) ? (
+                  <BrowserHistory
+                    eachHistory={eachHistory}
+                    key={eachHistory.id}
+                    deleteHistory={this.deleteHistory}
+                  />
+                ) : null,
+              )}
+            </ul>
+          )}
+          {allHistoryDeleted && (
+            <div className="no-content-show">
+              <p>There is no history to show</p>
+            </div>
+          )}
         </div>
       </div>
     )
